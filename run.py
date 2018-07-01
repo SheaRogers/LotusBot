@@ -13,10 +13,29 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith('!alerts'):
+    cmd = message.content.split(' ')
+    if cmd[0] == "~alerts":
+        await client.delete_message(message)
         stat = StatusFuncs()
-        msg = stat.Alerts()
+        if len(cmd) == 2:
+            msg = stat.Alerts(cmd[1])
+        else:
+            msg = stat.Alerts()
         await client.send_message(message.channel, msg)
+    # ~sortie - Shows details on the current sortie
+    if cmd[0] == "~sortie":
+        await client.delete_message(message)
+        stat = StatusFuncs()
+        msg = stat.Sortie()
+        await client.send_message(message.channel, msg)
+    # !purge - purges all output for the bot
+    elif cmd[0] == "~purge":
+        await client.delete_message(message)
+        botMsg = []  # list of messages from bot
+        async for x in client.logs_from(message.channel, limit=20):
+            if x.author.id == client.user.id:  # ensure message came from bot
+                botMsg.append(x)
+        await client.delete_messages(botMsg)
 
 
 @client.event
