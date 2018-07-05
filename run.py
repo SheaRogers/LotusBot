@@ -2,7 +2,7 @@ import discord
 from functions.status import StatusFuncs
 import signal
 
-TOKEN = 'NDYzMDIzNjMyNzcyMzY2MzM4.DhqYMw.GtsWxLsNse84J7bfIQxnhwp58Lo'
+TOKEN = ''
 
 client = discord.Client()
 
